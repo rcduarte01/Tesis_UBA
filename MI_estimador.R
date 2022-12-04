@@ -114,7 +114,8 @@ Finfluencia_MI <- function(a,b){
   
 }
 
-
+mm <- rbeta(100, 2,8)
+ajuste1 <- Ajuste_MI_estimador_beta(mm)
 
 
 
