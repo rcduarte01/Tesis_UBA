@@ -5,17 +5,21 @@ library(MASS)
 library(fitdistrplus)
 library(latex2exp)
 # funciones psi
+
 psibeta1 <- function(x, muestra){
   pbeta(muestra, shape1=x[1], shape2=x[2]) - 1/2
 }
+
 psibeta2 <- function(x, muestra){
-  pbeta(muestra, shape1=x[1], shape2=x[2])^2 - 1/3
+  pbeta(muestra, shape1=x[1], shape2=x[2])^2- 1/3
 }
+
 psii <- function(x,muestra){
   F1 <- psibeta1(x,muestra)
   F2 <- psibeta2(x,muestra)
   return(c(F1,F2))
 }
+
 psiI <- function(x,muestra){
   F1 <- sum(pbeta(muestra, shape1=x[1], shape2=x[2]) -1/2)
   F2 <- sum(pbeta(muestra, shape1=x[1], shape2=x[2])^2 - 1/3)
@@ -114,8 +118,9 @@ Finfluencia_MI <- function(a,b){
   
 }
 
-mm <- rbeta(100, 2,8)
-ajuste1 <- Ajuste_MI_estimador_beta(mm)
+
+
+
 
 
 

@@ -8,7 +8,7 @@ cub_empirico<- function(a,b, x0=0, cont=0){
   MIa <-  0
   MIb <-  0
   
-  for(i in 1:100){
+  for(i in 1:1000){
     muestra <- rbeta(100, shape1 = a, shape2 = b)
     if(cont!=0){
       muestra[1:cont]<- rep(x0,cont)
@@ -24,9 +24,9 @@ cub_empirico<- function(a,b, x0=0, cont=0){
     MIb <- MIb + ifelse(ajusteMI[2,1]<=b & ajusteMI[2,2]>=b,1,0)
   }
   
-  return(c(MIa,MIb,MVa,MVb)/100)
+  return(c(MIa,MIb,MVa,MVb)/1000)
   
 }
 
-cub_empirico(a=3, b=0.8, x0=0.01, cont = 1)
+cub_empirico(a=2, b=6, x0=0.5, cont = 3)
 
