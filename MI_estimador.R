@@ -15,7 +15,7 @@ psibeta2 <- function(x, muestra){
 }
 
 psii <- function(x,muestra){
-  F1 <- psibeta1(x,muestra)
+  F1 <- psibeta1(x,muestra) 
   F2 <- psibeta2(x,muestra)
   return(c(F1,F2))
 }
@@ -28,9 +28,15 @@ psiI <- function(x,muestra){
 
 # estimador puntual
 MI_estimador_beta <- function(x){
-  ajuste <- rlm(x~1, method = "MM")
-  xbar <-  ajuste$coefficients
-  s2 <- summary(ajuste)$sigma^2
+  #ajuste <- rlm(x~1, method = "MM")
+  #xbar <-  ajuste$coefficients
+  #s2 <- summary(ajuste)$sigma^2
+  
+  xbar <- mean(x)
+  s2 <- var(x)
+  
+  alpha0 <- -xbar*(-xbar+xbar^2+s2)/s2
+  beta0 <- (alpha0-alpha0*xbar)/xbar
   
   alpha0 <- max(0.0001, (xbar*(1-xbar)/s2 - 1)*xbar)
   beta0  <- max(0.0001, (xbar*(1-xbar)/s2 - 1)*(1-xbar))
