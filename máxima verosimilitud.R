@@ -1,3 +1,7 @@
+library(ggplot2)
+library(ggpubr)
+library(gridExtra)
+library(patchwork)
 psibeta1_MLE <- function(x, muestra){
 digamma(x[1] + x[2]) - digamma(x[1]) + log(muestra)
 }
@@ -28,25 +32,50 @@ Jfun_MLE <- function(muestra, alfa, beta){
 Finfluencia_MLE <- function(alfa,beta){
   x0 <- seq(from=0.01, to=0.99, length=100)
   muestra <- rbeta(100, shape1 = alfa, shape2 = beta)
+  
   B  <- Jfun_MLE(muestra, alfa, beta)
   FF <- -solve(B)%*%sapply(x0, psii_MLE, x = c(alfa,beta))
   
-  par(mfrow=c(1,2))
-  plot(x0,FF[1,], type = "l", lwd=2, 
-       ylab=TeX("$IF_1(x_0)$"), xlab=TeX("$x_0$"),
-       axes=F)
   
-  axis(1,cex.axis=2)
-  axis(2,cex.axis=2)
+  df <- data.frame(x0,FF1=FF[1,],FF2 = FF[2,])
   
-  plot(x0,FF[2,], type = "l", lwd=2, ylab=TeX("$IF_2(x_0)$"),
-       xlab=TeX("$x_0$"),
-       axes=F)
+  grafico1 <- ggplot(df, aes(x=x0,y=FF1))+
+    geom_line() +
+    ylab(TeX("$IF_1(x_0)$") )+
+    xlab(TeX("$x_0$") )+
+    theme_minimal()+
+    theme(axis.text = element_text(face="bold",size=15),
+          legend.text = element_text(size=15, face = "bold"),
+          legend.title = element_text(size = 15, face = "bold"),
+          legend.position = c(0.8, 0.79))
   
-  axis(1,cex.axis=2)
-  axis(2,cex.axis=2)
+  grafico2 <- ggplot(df, aes(x=x0,y=FF2))+
+    geom_line() +
+    ylab(TeX("$IF_2(x_0)$") )+
+    xlab(TeX("$x_0$") )+
+    theme_minimal()+
+    theme(axis.text = element_text(face="bold",size=15),
+          legend.text = element_text(size=15, face = "bold"),
+          legend.title = element_text(size = 15, face = "bold"),
+          legend.position = c(0.8, 0.79))
   
-  par(mfrow=c(1,1))
-
-  
+  grafico3 <- ggplot(data.frame(x = c(0,1)), aes(x = x)) +
+    stat_function(fun = dbeta,n=1000,
+                  args = list(shape1 = alfa, shape2=beta)) +
+    ylab(TeX("$f_{\\theta}(x)$") )+
+    theme_minimal()+
+    theme(axis.text = element_text(face="bold",size=15))
+  grafico3 | (grafico1 / grafico2)
 }
+
+Finfluencia_MLE(7,7)
+Finfluencia_MLE(0.7,0.9)
+
+Finfluencia_MLE(3,0.8)
+Finfluencia_MLE(2,6)
+Finfluencia_MLE(0.8,0.8)
+
+
+
+
+
