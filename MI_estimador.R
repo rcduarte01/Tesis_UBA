@@ -1,5 +1,5 @@
 # este script contiene el código de las funciones
-# relacionadas con el MI Estimador
+# relacionadas con el MI estimador
 
 library(MASS)
 library(fitdistrplus)
