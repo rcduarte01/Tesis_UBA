@@ -245,7 +245,3 @@ Finfluencia_MDPDE<- function(a,b, alpha){
 
 
 
-
-
-
-

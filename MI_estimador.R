@@ -4,6 +4,7 @@
 library(MASS)
 library(fitdistrplus)
 library(latex2exp)
+library(patchwork)
 # funciones psi
 
 psibeta1 <- function(x, muestra){
@@ -111,7 +112,8 @@ Finfluencia_MI <- function(a,b){
   x0 <- seq(from=0, to=1, length=100)
   
   muestra <- rbeta(100, shape1 = a, shape2 = b)
-  B <- BB2(muestra)
+  #B <- BB2(muestra)
+  B<- Bfunc_MI(muestra)
   FF1 <- c()
   FF2 <- c()
   for(i in 1:100){
