@@ -109,7 +109,7 @@ Ajuste_MI_estimador_beta<- function(muestra, conf=0.95, rob=TRUE){
 
 
 Finfluencia_MI <- function(a,b){
-  x0 <- seq(from=0, to=1, length=100)
+  x0 <- seq(from=-0.1, to=1.1, length=100)
   
   muestra <- rbeta(100, shape1 = a, shape2 = b)
   #B <- BB2(muestra)
